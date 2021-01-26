@@ -2,17 +2,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SoundModes : MonoBehaviour
+public class Modes : MonoBehaviour
 {
     public Dropdown dropdown;
-    public int indexSoundMode;
-
-    // Start is called before the first frame update
+    public int indexMode;
     void Start()
     {
         List<string> modes = new List<string>();
-        modes.Add("Continuous");
-        modes.Add("Discrete");
+        modes.Add("Current");
+        modes.Add("Fixed octave, vary distance");
 
         foreach (var mode in modes)
         {
@@ -22,16 +20,11 @@ public class SoundModes : MonoBehaviour
         dropdown.onValueChanged.AddListener(delegate { DropdownItemSelected(dropdown); });
     }
 
-    void DropdownItemSelected (Dropdown dropdown)
+    void DropdownItemSelected(Dropdown dropdown)
     {
-        indexSoundMode = dropdown.value;
-        
+        indexMode = dropdown.value;
+
         //TextBox.text = dropdown.options[index].text;
     }
 
-    // Update is called once per frame
-    void Destroy()
-    {
-        dropdown.onValueChanged.RemoveAllListeners();
-    }
 }

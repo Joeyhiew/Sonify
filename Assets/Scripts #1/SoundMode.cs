@@ -1,20 +1,18 @@
-﻿using System.Collections;
+﻿using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class WaveModes : MonoBehaviour
+public class SoundMode : MonoBehaviour
 {
-
     public Dropdown dropdown;
-    public int indexWaveMode;
+    public int indexSoundMode;
 
     // Start is called before the first frame update
     void Start()
     {
         List<string> modes = new List<string>();
-        modes.Add("Sine");
-        modes.Add("Square");
+        modes.Add("Continuous");
+        modes.Add("Discrete");
 
         foreach (var mode in modes)
         {
@@ -26,7 +24,7 @@ public class WaveModes : MonoBehaviour
 
     void DropdownItemSelected(Dropdown dropdown)
     {
-        indexWaveMode = dropdown.value;
+        indexSoundMode = dropdown.value;
 
         //TextBox.text = dropdown.options[index].text;
     }

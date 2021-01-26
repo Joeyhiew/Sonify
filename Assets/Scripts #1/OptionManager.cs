@@ -2,7 +2,7 @@
 
 public class OptionManager : MonoBehaviour
 {
-    public SoundModes soundMode;
+    public SoundMode soundMode;
     public WaveModes waveModes;
     public int waveIndex;
     public int modeIndex;
