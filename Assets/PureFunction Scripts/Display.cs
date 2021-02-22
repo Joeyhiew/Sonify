@@ -1,18 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Modes : MonoBehaviour
+public class Display : MonoBehaviour
 {
     public Dropdown dropdown;
-    public int indexMode;
+    public int indexDisplay;
     void Start()
     {
         List<string> modes = new List<string>();
-        modes.Add("Current");
-        modes.Add("Fixed octave, vary distance");
-        modes.Add("Low and continuous");
-        modes.Add("Low and distance");
+        modes.Add("Display");
+        modes.Add("No display");
 
         foreach (var mode in modes)
         {
@@ -24,7 +23,7 @@ public class Modes : MonoBehaviour
 
     void DropdownItemSelected(Dropdown dropdown)
     {
-        indexMode = dropdown.value;
+        indexDisplay = dropdown.value;
 
         //TextBox.text = dropdown.options[index].text;
     }

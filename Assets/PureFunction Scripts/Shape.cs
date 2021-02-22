@@ -29,6 +29,8 @@ public class Shape : MonoBehaviour
     private float volBoundInner = 7f;
     private float volBoundOuter = 10f;
 
+    private List<GameObject> shapeList = new List<GameObject>();
+
     Vector3 Origin = new Vector3(0, 0, 0);
 
     // Start is called before the first frame update
@@ -65,10 +67,16 @@ public class Shape : MonoBehaviour
         //
         //--------------1 Big and 1 Small Circle -----------
         //
-        ellipse1 = Instantiate(EllipsePrefab).GetComponent<EllipseRenderer>();
-        ellipse2 = Instantiate(EllipsePrefab).GetComponent<EllipseRenderer>();
+        GameObject e1 = (GameObject)Instantiate(EllipsePrefab);
+        ellipse1 = e1.GetComponent<EllipseRenderer>();
+        GameObject e2 = (GameObject)Instantiate(EllipsePrefab);
+        ellipse2 = e2.GetComponent<EllipseRenderer>();
+        //ellipse1 = Instantiate(EllipsePrefab).GetComponent<EllipseRenderer>();
+        //ellipse2 = Instantiate(EllipsePrefab).GetComponent<EllipseRenderer>();
         ellipse1.InitializeEllipse(new Ellipse(1, 1, -6, 0, 1));
         ellipse2.InitializeEllipse(new Ellipse(1, 1, 10, 0, 10));
+        shapeList.Add(e1);
+        shapeList.Add(e2);
     }
 
     void Update()
@@ -126,8 +134,61 @@ public class Shape : MonoBehaviour
             AdjustDistance();
             AdjustFrequency();
         }
+        // Low and continuous
+        else if (modeManager.modeIndex == 2)
+        {
+            audioManager.updateFrequency(Mathf.Abs(finalRatio) / 100);
+            audioManager.Vol = 1f;
+            AdjustDistance();
+            AdjustFrequency();
+        }
+        // Low and distance
+        else if(modeManager.modeIndex == 3)
+        {
+            //audioManager.updateFrequency(Mathf.Abs(finalRatio) / volBoundOuter);
+            /// to only play sounds after a distance
+            print(finalRatio);
+            if (Mathf.Abs(finalRatio) > volBoundOuter)
+            {
+                audioManager.Vol = 0;
+            }
+            else
+            {
+                audioManager.Vol = 1f;
+                            if (Mathf.Abs(finalRatio) > volBoundInner)
+                            {
+                                audioManager.updateFrequency(Mathf.Abs(finalRatio) / volBoundOuter);
+                                //float volRatio = (Mathf.Abs(finalRatio) - volBoundInner) / (volBoundOuter - volBoundInner);
+                                //audioManager.Vol = Mathf.Lerp(1, 0, volRatio);
+                            }
+                            else
+                            {
+                                audioManager.updateFrequency(Mathf.Abs(finalRatio) / volBoundOuter);
+                                //audioManager.Vol = 1f;
+                            }
+            }
 
-        
+            AdjustDistance();
+            AdjustFrequency();
+        }        
+
+        // display
+        if (modeManager.displayIndex == 0)
+        {
+            foreach (GameObject obj in shapeList)
+            {
+                obj.GetComponent<MeshRenderer>().material = null;
+            }
+
+        }
+        // remove display
+        else if (modeManager.displayIndex == 1)
+        {
+            foreach (GameObject obj in shapeList)
+            {
+                obj.GetComponent<MeshRenderer>().material.color = Color.black;
+            }
+        }
     }
 
     private void AdjustDistance()

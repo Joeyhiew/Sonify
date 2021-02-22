@@ -160,8 +160,6 @@ public class PlaneRenderer : MonoBehaviour
         {
             print("OH NO ITS NULL");
         }
-        print("instantiated point prefab");
-        print("point:" + pointPosition);
         Instantiate(LinePointPrefab, pointPosition, Quaternion.identity);
     }
 
